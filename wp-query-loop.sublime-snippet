@@ -1,0 +1,35 @@
+<snippet>
+	
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>query_loop</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!--<scope>source.php</scope>-->
+
+
+<content><![CDATA[
+
+// WP QUERY LOOP
+
+ $args = array(
+      'posts_per_page' => 10,
+      'post_type'   => 'post', 
+      'post_status' => 'publish', 
+      'nopaging' => false,
+                    );
+  $the_query = new WP_Query( $args );
+                    if( $the_query->have_posts() ): 
+                      while ( $the_query->have_posts() ) : $the_query->the_post();
+                       //DO YOUR THING
+                        $html .= get_the_title();
+                         endwhile;
+                  endif;
+            wp_reset_query();  // Restore global post data stomped by the_post().
+   return $html;
+}                    
+
+
+
+]]>
+    
+    </content>
+</snippet>

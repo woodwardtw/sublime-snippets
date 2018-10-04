@@ -1,0 +1,50 @@
+<snippet>
+	
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>wp_tax_tag</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!--<scope>source.php</scope>-->
+
+
+<content><![CDATA[
+add_action( 'init', 'create_${1:this}_taxonomies', 0 );
+function create_${1:this}_taxonomies()
+{
+  // Add new taxonomy, NOT hierarchical (like tags)
+  \$labels = array(
+    'name' => _x( '${1/(.+)/\u$1/g}s', 'taxonomy general name' ),
+    'singular_name' => _x( '${1:this}', 'taxonomy singular name' ),
+    'search_items' =>  __( 'Search ${1/(.+)/\u$1/g}s' ),
+    'popular_items' => __( 'Popular ${1/(.+)/\u$1/g}s' ),
+    'all_items' => __( 'All ${1/(.+)/\u$1/g}s' ),
+    'parent_item' => null,
+    'parent_item_colon' => null,
+    'edit_item' => __( 'Edit ${1/(.+)/\u$1/g}s' ),
+    'update_item' => __( 'Update ${1:this}' ),
+    'add_new_item' => __( 'Add New ${1:this}' ),
+    'new_item_name' => __( 'New ${1:this}' ),
+    'add_or_remove_items' => __( 'Add or remove ${1/(.+)/\u$1/g}s' ),
+    'choose_from_most_used' => __( 'Choose from the most used ${1/(.+)/\u$1/g}s' ),
+    'menu_name' => __( '${1:this}' ),
+  );
+
+//registers taxonomy specific post types - default is just post
+  register_taxonomy('${1/(.+)/\u$1/g}s',array('post'), array(
+    'hierarchical' => true,
+    'labels' => \$labels,
+    'show_ui' => false,
+    'update_count_callback' => '_update_post_term_count',
+    'query_var' => true,
+    'rewrite' => array( 'slug' => '${1:this}' ),
+    'show_in_rest'          => true,
+    'rest_base'             => '${1:this}',
+    'rest_controller_class' => 'WP_REST_Terms_Controller',
+    'show_in_nav_menus' => false,    
+  ));
+}
+
+
+]]></content>
+</snippet>
+
+

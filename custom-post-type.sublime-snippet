@@ -1,0 +1,77 @@
+<snippet>
+	
+	<!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+	<tabTrigger>z_alt_cpt</tabTrigger>
+	<!-- Optional: Set a scope to limit where the snippet will trigger -->
+	<!--<scope>source.php</scope>-->
+
+
+<content><![CDATA[
+
+//${1:this} custom post type
+
+// Register Custom Post Type ${1:this}
+// Post Type Key: ${1:this}
+
+function create_${1:this}_cpt() {
+
+  \$labels = array(
+    'name' => __( '${1/(.+)/\u$1/g}s', 'Post Type General Name', 'textdomain' ),
+    'singular_name' => __( '${1/(.+)/\u$1/g}', 'Post Type Singular Name', 'textdomain' ),
+    'menu_name' => __( '${1/(.+)/\u$1/g}', 'textdomain' ),
+    'name_admin_bar' => __( '${1/(.+)/\u$1/g}', 'textdomain' ),
+    'archives' => __( '${1/(.+)/\u$1/g} Archives', 'textdomain' ),
+    'attributes' => __( '${1/(.+)/\u$1/g} Attributes', 'textdomain' ),
+    'parent_item_colon' => __( '${1/(.+)/\u$1/g}:', 'textdomain' ),
+    'all_items' => __( 'All ${1/(.+)/\u$1/g}s', 'textdomain' ),
+    'add_new_item' => __( 'Add New ${1/(.+)/\u$1/g}', 'textdomain' ),
+    'add_new' => __( 'Add New', 'textdomain' ),
+    'new_item' => __( 'New ${1/(.+)/\u$1/g}', 'textdomain' ),
+    'edit_item' => __( 'Edit ${1/(.+)/\u$1/g}', 'textdomain' ),
+    'update_item' => __( 'Update ${1/(.+)/\u$1/g}', 'textdomain' ),
+    'view_item' => __( 'View ${1/(.+)/\u$1/g}', 'textdomain' ),
+    'view_items' => __( 'View ${1/(.+)/\u$1/g}s', 'textdomain' ),
+    'search_items' => __( 'Search ${1/(.+)/\u$1/g}s', 'textdomain' ),
+    'not_found' => __( 'Not found', 'textdomain' ),
+    'not_found_in_trash' => __( 'Not found in Trash', 'textdomain' ),
+    'featured_image' => __( 'Featured Image', 'textdomain' ),
+    'set_featured_image' => __( 'Set featured image', 'textdomain' ),
+    'remove_featured_image' => __( 'Remove featured image', 'textdomain' ),
+    'use_featured_image' => __( 'Use as featured image', 'textdomain' ),
+    'insert_into_item' => __( 'Insert into ${1:this}', 'textdomain' ),
+    'uploaded_to_this_item' => __( 'Uploaded to this ${1:this}', 'textdomain' ),
+    'items_list' => __( '${1/(.+)/\u$1/g} list', 'textdomain' ),
+    'items_list_navigation' => __( '${1/(.+)/\u$1/g} list navigation', 'textdomain' ),
+    'filter_items_list' => __( 'Filter ${1/(.+)/\u$1/g} list', 'textdomain' ),
+  );
+  \$args = array(
+    'label' => __( '${1:this}', 'textdomain' ),
+    'description' => __( '', 'textdomain' ),
+    'labels' => \$labels,
+    'menu_icon' => '',
+    'supports' => array('title', 'editor', 'revisions', 'author', 'trackbacks', 'custom-fields', 'thumbnail',),
+    'taxonomies' => array(),
+    'public' => true,
+    'show_ui' => true,
+    'show_in_menu' => true,
+    'menu_position' => 5,
+    'show_in_admin_bar' => true,
+    'show_in_nav_menus' => true,
+    'can_export' => true,
+    'has_archive' => true,
+    'hierarchical' => false,
+    'exclude_from_search' => false,
+    'show_in_rest' => true,
+    'publicly_queryable' => true,
+    'capability_type' => 'post',
+    'menu_icon' => 'dashicons-universal-access-alt',
+  );
+  register_post_type( '${1:this}', \$args );
+  
+  // flush rewrite rules because we changed the permalink structure
+  global \$wp_rewrite;
+  \$wp_rewrite->flush_rules();
+}
+add_action( 'init', 'create_${1:this}_cpt', 0 );
+]]></content>
+</snippet>
